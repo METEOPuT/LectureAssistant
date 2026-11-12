@@ -30,6 +30,3 @@ key.properties
 .DS_Store
 Thumbs.db
 *.log
-
-# Исключаем локальные модели, чтобы не раздувать репозиторий
-/app/src/main/assets/vosk-model-small-ru-0.22/
