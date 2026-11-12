@@ -180,6 +180,7 @@
                 android:layout_margin="12dp"
                 android:text="Вниз ↓"
                 android:visibility="gone" />
+
         </FrameLayout>
 
         <!-- РАЗДЕЛИТЕЛЬ -->

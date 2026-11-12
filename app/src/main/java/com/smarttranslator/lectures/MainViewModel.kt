@@ -42,6 +42,9 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     private val _summary = MutableStateFlow("")
     val summary: StateFlow<String> = _summary
 
+    private val _partialText = MutableStateFlow<String?>(null)
+    val partialText: StateFlow<String?> = _partialText
+
     val lectures: StateFlow<List<Lecture>> = dao.observeAllLectures()
         .stateIn(scope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -88,13 +91,18 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
             // 4. Запускаем запись звука
             audio.start(scope, preferredDevice = resolveMic(preferredMicId)) { buf, len ->
-                if (vosk.accept(buf, len)) {
-                    val text = vosk.getResult()
-                    if (!text.isNullOrBlank()) {
+                val isFinal = vosk.accept(buf, len)
+
+                if (isFinal) {
+                    val finalText = vosk.getResult()
+                    _partialText.value = null // <-- СБРАСЫВАЕМ ПРОМЕЖУТОЧНЫЙ ТЕКСТ
+                    if (!finalText.isNullOrBlank()) {
                         scope.launch {
-                            dao.insertSegment(TranscriptSegment(lectureId = id, text = text, timestamp = System.currentTimeMillis()))
+                            dao.insertSegment(TranscriptSegment(lectureId = id, text = finalText, timestamp = System.currentTimeMillis(), isFinal = true))
                         }
                     }
+                } else {
+                    _partialText.value = vosk.getPartialResult() // <-- ОБНОВЛЯЕМ
                 }
             }
             _status.value = AppStatus.Recording

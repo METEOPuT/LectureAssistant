@@ -49,7 +49,9 @@ class VoskManager(private val context: Context) {
 
             Log.d("VoskDebug", "Загружаем модель...")
             model = Model(modelDir.absolutePath)
-            recognizer = Recognizer(model, 16000f)
+            recognizer = Recognizer(model!!, 16000f).apply {
+                setPartialWords(true) // Включаем промежуточные результаты
+            }
             Log.d("VoskDebug", "=== МОДЕЛЬ УСПЕШНО ЗАГРУЖЕНА ===")
             Result.success(Unit)
         } catch (e: Throwable) {
@@ -89,6 +91,12 @@ class VoskManager(private val context: Context) {
     fun accept(buffer: ByteArray, length: Int): Boolean {
         val rec = recognizer ?: return false
         return rec.acceptWaveForm(buffer, length)
+    }
+
+    fun getPartialResult(): String? {
+        val rec = recognizer ?: return null
+        val json = JSONObject(rec.partialResult) // Получаем промежуточный JSON
+        return json.optString("partial").ifBlank { null }
     }
 
     fun getResult(): String? {

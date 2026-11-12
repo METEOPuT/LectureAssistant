@@ -20,7 +20,12 @@ class OpenRouterSummarizer(
 
     override suspend fun summarize(text: String): Result<String> = withContext(Dispatchers.IO) {
         try {
-            val client = OkHttpClient()
+            // Добавляем таймауты, чтобы запрос не висел вечно
+            val client = OkHttpClient.Builder()
+                .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+                .build()
+
             val prompt = "$customInstruction\n\nТекст:\n$text"
 
             val jsonBody = JSONObject().apply {
@@ -37,6 +42,8 @@ class OpenRouterSummarizer(
                 .url("https://openrouter.ai/api/v1/chat/completions")
                 .addHeader("Authorization", "Bearer $apiKey")
                 .addHeader("Content-Type", "application/json")
+                .addHeader("HTTP-Referer", "https://github.com/METEOPuT/LectureAssistant")
+                .addHeader("X-Title", "LectureAssistant")
                 .post(jsonBody.toString().toRequestBody("application/json".toMediaType()))
                 .build()
 
@@ -44,8 +51,14 @@ class OpenRouterSummarizer(
             val response = client.newCall(request).execute()
             val responseBody = response.body?.string()
 
-            if (!response.isSuccessful || responseBody == null) {
+            if (!response.isSuccessful) {
+                // ВОТ ЗДЕСЬ МЫ ТЕПЕРЬ УВИДИМ ОШИБКУ В ЛОГАХ
+                Log.e("OpenRouter", "Ошибка API ${response.code}: $responseBody")
                 return@withContext Result.failure(Exception("Ошибка API: ${response.code}"))
+            }
+
+            if (responseBody == null) {
+                return@withContext Result.failure(Exception("Пустой ответ от сервера"))
             }
 
             val jsonResponse = JSONObject(responseBody)
@@ -57,7 +70,7 @@ class OpenRouterSummarizer(
             Log.d("OpenRouter", "Успешный ответ получен.")
             Result.success(content.trim())
         } catch (e: Exception) {
-            Log.e("OpenRouter", "Ошибка сети", e)
+            Log.e("OpenRouter", "Сетевая ошибка", e)
             Result.failure(e)
         }
     }

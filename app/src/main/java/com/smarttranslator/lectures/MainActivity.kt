@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
             val prompt = AppConfig.DEFAULT_PROMPT
 
             if (isApiSelected && apiKey.isBlank()) {
-                Toast.makeText(this, "Ошибка: API-ключ не задан в AppConfig", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Введите API-ключ OpenRouter", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -191,20 +191,48 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var currentSegments: List<com.smarttranslator.lectures.db.entities.TranscriptSegment> = emptyList()
+    private var currentPartial: String? = null
+
     private fun observe() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                // Слушаем финальные сегменты
                 launch {
                     vm.segments.collect { segs ->
-                        val wasAtEnd = autoScroll
-                        transcriptAdapter.submit(segs)
-                        if (segs.isNotEmpty()) binding.transcriptRecycler.post {
-                            if (wasAtEnd) binding.transcriptRecycler.scrollToPosition(segs.size - 1)
-                            else updateJumpToBottom()
+                        currentSegments = segs
+                        transcriptAdapter.submit(currentSegments, currentPartial)
+
+                        // Прячем заглушку, если есть хоть какой-то текст
+                        binding.tvTranscriptEmpty.visibility = if (segs.isEmpty() && currentPartial.isNullOrBlank()) View.VISIBLE else View.GONE
+
+                        // Автоскролл вниз
+                        if (autoScroll && transcriptAdapter.itemCount > 0) {
+                            binding.transcriptRecycler.post {
+                                binding.transcriptRecycler.scrollToPosition(transcriptAdapter.itemCount - 1)
+                            }
                         }
-                        binding.tvTranscriptEmpty.visibility = if (segs.isEmpty()) View.VISIBLE else View.GONE
                     }
                 }
+
+                // Слушаем партиал
+                launch {
+                    vm.partialText.collect { text ->
+                        currentPartial = text
+                        transcriptAdapter.submit(currentSegments, currentPartial)
+
+                        binding.tvTranscriptEmpty.visibility = if (currentSegments.isEmpty() && text.isNullOrBlank()) View.VISIBLE else View.GONE
+
+                        // Автоскролл вниз при появлении партиала
+                        if (autoScroll && transcriptAdapter.itemCount > 0) {
+                            binding.transcriptRecycler.post {
+                                binding.transcriptRecycler.scrollToPosition(transcriptAdapter.itemCount - 1)
+                            }
+                        }
+                    }
+                }
+
                 launch { vm.summary.collect { s -> binding.notesText.text = s.ifBlank { "Здесь появится конспект…" } } }
                 launch { vm.lectures.collect { lectureAdapter.submit(it) } }
                 launch { vm.status.collect { st -> renderStatus(st) } }
