@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- БЛОК 1: НАСТРОЙКИ -->
+        <LinearLayout
+            android:id="@+id/settingsBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/surface"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/dotStatus"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@color/textSecondary" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:indeterminateTint="@color/accent"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Готов"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnOpenDrawer"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Лекции" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:layout_weight="1"
+                    android:text="Начать лекцию" />
+
+                <Button
+                    android:id="@+id/btnFinish"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Завершить" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnExpandToggle"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Развернуть ▼" />
+
+            <LinearLayout
+                android:id="@+id/expandableContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Микрофон"
+                    android:textColor="@color/textSecondary" />
+
+                <Spinner
+                    android:id="@+id/spinnerMic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Интервал конспектирования (мин)"
+                    android:textColor="@color/textSecondary" />
+
+                <EditText
+                    android:id="@+id/etInterval"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="1"
+                    android:textColor="@color/textPrimary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Модель конспектирования"
+                    android:textColor="@color/textSecondary" />
+
+                <Spinner
+                    android:id="@+id/spinnerModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp" />
+                <EditText
+                    android:id="@+id/etApiKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ключ OpenRouter (sk-or-v1-...)"
+                    android:textColorHint="@color/textSecondary"
+                    android:textColor="@color/textPrimary"
+                    android:inputType="textPassword"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- БЛОК 2: СУБТИТРЫ -->
+        <FrameLayout
+            android:id="@+id/transcriptBlock"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/bg">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/transcriptRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+
+            <TextView
+                android:id="@+id/tvTranscriptEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Субтитры появятся здесь"
+                android:textColor="@color/textSecondary" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/btnJumpToBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="12dp"
+                android:text="Вниз ↓"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- РАЗДЕЛИТЕЛЬ -->
+        <com.smarttranslator.lectures.ui.SplitterView
+            android:id="@+id/splitter"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp" />
+
+        <!-- БЛОК 3: КОНСПЕКТ -->
+        <ScrollView
+            android:id="@+id/notesBlock"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/surface"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/notesText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:text="Здесь появится конспект…"
+                android:textColor="@color/textPrimary"
+                android:textSize="15sp" />
+        </ScrollView>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/drawerRecycler"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/surface"
+        android:paddingTop="24dp" />
+</androidx.drawerlayout.widget.DrawerLayout>
