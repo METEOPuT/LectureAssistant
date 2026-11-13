@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
                     android:layout_weight="1"
-                    android:text="Начать лекцию" />
+                    android:text="Запуск лекции" />
 
                 <Button
                     android:id="@+id/btnFinish"
