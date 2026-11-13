@@ -1,39 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="5dp"
+    android:padding="12dp"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:padding="12dp"
-    android:background="?attr/selectableItemBackground">
+    android:background="@drawable/bg_lecture_item"
+    android:clickable="true"
+    android:focusable="true">
 
+    <!-- ЦВЕТНОЙ ИНДИКАТОР -->
+    <View
+        android:layout_width="4dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/accent" />
+
+    <!-- ИНФОРМАЦИЯ О ЛЕКЦИИ -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <!-- НАЗВАНИЕ -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Название лекции"
             android:textColor="@color/textPrimary"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end" />
 
+        <!-- ДАТА -->
         <TextView
             android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="13 ноября 2026"
             android:textColor="@color/textSecondary"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
     </LinearLayout>
+
+    <!-- УДАЛЕНИЕ ЛЕКЦИИ -->
+
 
     <ImageButton
         android:id="@+id/btnDelete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@android:drawable/ic_menu_delete"
-        android:contentDescription="Удалить"
-        android:tint="@color/recording" />
+        android:src="@drawable/ic_lecture_delete"
+        android:contentDescription="Удалить лекцию"
+        android:padding="12dp" />
+
 </LinearLayout>

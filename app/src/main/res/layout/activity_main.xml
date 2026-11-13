@@ -11,18 +11,62 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- БЛОК 1: НАСТРОЙКИ -->
+        <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
         <LinearLayout
             android:id="@+id/settingsBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/surface"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_lecture_panel"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="14dp">
 
+            <!-- ЗАГОЛОВОК -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="LectureAssistant"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="Умный помощник на лекциях"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnOpenDrawer"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Лекции"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <!-- СТАТУС -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -30,7 +74,7 @@
                     android:id="@+id/dotStatus"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="@color/textSecondary" />
+                    android:background="@drawable/bg_status_circle" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -40,56 +84,60 @@
                     android:indeterminateTint="@color/accent"
                     android:visibility="gone" />
 
-
                 <TextView
                     android:id="@+id/tvStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:text="Готов"
+                    android:text="Готов к записи"
                     android:textColor="@color/textSecondary"
                     android:textSize="13sp" />
-
-                <Button
-                    android:id="@+id/btnOpenDrawer"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Лекции" />
             </LinearLayout>
 
+            <!-- КНОПКИ ЗАПИСИ -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
+
 
                 <Button
                     android:id="@+id/btnStart"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:text="Запуск лекции" />
+                    android:text="Запуск"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:singleLine="true" />
 
                 <Button
                     android:id="@+id/btnFinish"
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
-                    android:text="Завершить" />
+                    android:text="Завершить"
+                    android:textAllCaps="false" />
             </LinearLayout>
 
+            <!-- РАСКРЫТИЕ НАСТРОЕК -->
             <Button
                 android:id="@+id/btnExpandToggle"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="Развернуть ▼" />
+                android:text="Настройки ▼"
+                android:textAllCaps="false"
+                android:textColor="@color/accent"
+                android:textSize="13sp" />
 
+            <!-- ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ -->
             <LinearLayout
                 android:id="@+id/expandableContent"
                 android:layout_width="match_parent"
@@ -100,26 +148,30 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Микрофон"
-                    android:textColor="@color/textSecondary" />
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
 
                 <Spinner
                     android:id="@+id/spinnerMic"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_height="48dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Интервал конспектирования (мин)"
-                    android:textColor="@color/textSecondary" />
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
 
                 <EditText
                     android:id="@+id/etInterval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
+                    android:selectAllOnFocus="true"
                     android:text="1"
                     android:textColor="@color/textPrimary" />
 
@@ -128,50 +180,77 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Модель конспектирования"
-                    android:textColor="@color/textSecondary" />
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
 
                 <Spinner
                     android:id="@+id/spinnerModel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_height="48dp" />
+
                 <EditText
                     android:id="@+id/etApiKey"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:hint="Ключ OpenRouter (sk-or-v1-...)"
-                    android:textColorHint="@color/textSecondary"
-                    android:textColor="@color/textPrimary"
+                    android:hint="Ключ OpenRouter"
                     android:inputType="textPassword"
+                    android:textColor="@color/textPrimary"
+                    android:textColorHint="@color/textSecondary"
                     android:visibility="gone" />
+
             </LinearLayout>
+
         </LinearLayout>
 
-        <!-- БЛОК 2: СУБТИТРЫ -->
+        <!-- СУБТИТРЫ: 65% ДОСТУПНОЙ ВЫСОТЫ -->
         <FrameLayout
             android:id="@+id/transcriptBlock"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/bg">
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="0.65"
+            android:background="@drawable/bg_lecture_panel"
+            android:clipToOutline="true">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transcriptRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="8dp"
                 android:clipToPadding="false"
+                android:paddingStart="14dp"
+                android:paddingTop="44dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="14dp"
                 android:scrollbars="vertical" />
 
+            <!-- ЗАГОЛОВОК СУБТИТРОВ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="СУБТИТРЫ"
+                android:textColor="@color/accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- ПУСТОЙ ЭКРАН -->
             <TextView
                 android:id="@+id/tvTranscriptEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Субтитры появятся здесь"
-                android:textColor="@color/textSecondary" />
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="Нажмите «Начать лекцию», чтобы увидеть субтитры"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp" />
 
+            <!-- АВТОПРОКРУТКА -->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/btnJumpToBottom"
                 android:layout_width="wrap_content"
@@ -183,39 +262,52 @@
 
         </FrameLayout>
 
-        <!-- РАЗДЕЛИТЕЛЬ -->
+        <!-- ПЕРЕТАСКИВАЕМЫЙ РАЗДЕЛИТЕЛЬ -->
+
+        <!-- ПРОЗРАЧНЫЙ РАЗДЕЛИТЕЛЬ -->
         <com.smarttranslator.lectures.ui.SplitterView
             android:id="@+id/splitter"
             android:layout_width="match_parent"
-            android:layout_height="12dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp" />
+            android:layout_height="24dp"
+            android:background="@android:color/transparent" />
 
-        <!-- БЛОК 3: КОНСПЕКТ -->
+
+        <!-- КОНСПЕКТ: 35% ДОСТУПНОЙ ВЫСОТЫ -->
         <ScrollView
             android:id="@+id/notesBlock"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/surface"
-            android:padding="12dp">
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="0.35"
+            android:background="@drawable/bg_lecture_panel"
+            android:clipToOutline="true"
+            android:fillViewport="true"
+            android:padding="16dp"
+            android:scrollbars="vertical">
 
             <TextView
                 android:id="@+id/notesText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingMultiplier="1.2"
-                android:text="Здесь появится конспект…"
+                android:lineSpacingExtra="4dp"
+                android:text="Здесь появится конспект лекции…"
                 android:textColor="@color/textPrimary"
                 android:textSize="15sp" />
+
         </ScrollView>
+
     </LinearLayout>
 
+    <!-- БОКОВОЕ МЕНЮ ЛЕКЦИЙ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/drawerRecycler"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/surface"
+        android:clipToPadding="false"
         android:paddingTop="24dp" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
