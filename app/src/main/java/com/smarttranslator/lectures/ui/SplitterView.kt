@@ -5,8 +5,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.smarttranslator.lectures.R
 
 class SplitterView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -14,10 +12,6 @@ class SplitterView @JvmOverloads constructor(
 
     var onDrag: ((dyPx: Float) -> Unit)? = null
     private var lastY = 0f
-
-    init {
-        setBackgroundColor(ContextCompat.getColor(context, R.color.surfaceAlt))
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {

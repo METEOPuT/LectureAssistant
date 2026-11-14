@@ -39,7 +39,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="LectureAssistant"
+                        android:text="Lecture Assistant"
                         android:textColor="@color/textPrimary"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -158,6 +158,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp" />
 
+                <EditText
+                    android:id="@+id/etApiKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Ключ OpenRouter"
+                    android:inputType="textPassword"
+                    android:textColor="@color/textPrimary"
+                    android:textColorHint="@color/textSecondary"
+                    android:visibility="gone" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -187,17 +198,6 @@
                     android:id="@+id/spinnerModel"
                     android:layout_width="match_parent"
                     android:layout_height="48dp" />
-
-                <EditText
-                    android:id="@+id/etApiKey"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="Ключ OpenRouter"
-                    android:inputType="textPassword"
-                    android:textColor="@color/textPrimary"
-                    android:textColorHint="@color/textSecondary"
-                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -262,14 +262,26 @@
 
         </FrameLayout>
 
-        <!-- ПЕРЕТАСКИВАЕМЫЙ РАЗДЕЛИТЕЛЬ -->
-
-        <!-- ПРОЗРАЧНЫЙ РАЗДЕЛИТЕЛЬ -->
-        <com.smarttranslator.lectures.ui.SplitterView
-            android:id="@+id/splitter"
+        <!-- РАЗДЕЛИТЕЛЬ -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="24dp"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent">
+
+            <!-- Сама "ручка" - короткая полоска по центру -->
+            <View
+                android:layout_width="48dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center"
+                android:background="@drawable/splitter_handle_bg" />
+
+            <!-- Прозрачный SplitterView поверх, чтобы ловить касания -->
+            <com.smarttranslator.lectures.ui.SplitterView
+                android:id="@+id/splitter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
 
 
         <!-- КОНСПЕКТ: 35% ДОСТУПНОЙ ВЫСОТЫ -->
